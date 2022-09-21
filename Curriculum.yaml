@@ -1,0 +1,37 @@
+
+behaviors:
+  Curriculum:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 128
+      buffer_size: 2048
+      learning_rate: 0.0003
+      beta: 0.01
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: false
+      hidden_units: 512
+      num_layers: 2
+      vis_encode_type: simple
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    keep_checkpoints: 5
+    checkpoint_interval: 500000
+    max_steps: 10000000
+    time_horizon: 128
+    summary_freq: 10000
+    threaded: true
+curriculum:
+  Curriculum:
+    measure: [0.7, 0.9]
+    min_lesson_length: 10
+    signal_smoothing: true
+    parameters:
+      checkpoint_reward: [0.3, 0.0, 0.0]
+      episode_reward: [0.0, 1.0, 2.0]
+      step_reward: [0.0, 0.0, -0.001]
